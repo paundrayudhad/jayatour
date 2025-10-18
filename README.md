@@ -1,73 +1,71 @@
-# Welcome to your Lovable project
+# Jayatour Laravel Application
 
-## Project info
+Jayatour kini menggunakan aplikasi Laravel 11 penuh yang menyajikan konten dinamis untuk halaman marketing sekaligus dashboard administrasi berbasis [Filament](https://filamentphp.com/). Konten paket perjalanan, artikel blog, galeri, dan testimoni dapat dikelola dari panel admin dan otomatis ditampilkan pada situs publik.
 
-**URL**: https://lovable.dev/projects/5f3980c6-b6b3-4199-992d-314197c7f024
+## Getting started
 
-## How can I edit this code?
+1. Ensure you have PHP 8.2+, Composer, Node.js (optional for front-end tooling), and a database (MySQL or SQLite) available.
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
+3. Copy the environment file and generate an application key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+4. Configure your database credentials in `.env`, then run migrations and seed the starter content (admin user, paket tour, artikel, galeri, dan testimoni contoh):
+   ```bash
+   php artisan migrate --seed
+   ```
+5. Start the local development server:
+   ```bash
+   php artisan serve
+   ```
 
-There are several ways of editing your application.
+## Konten dinamis yang tersedia
 
-**Use Lovable**
+* `resources/views/home.blade.php` – beranda marketing menampilkan kategori destinasi, paket unggulan, artikel terbaru, dan testimoni.
+* `resources/views/packages/*.blade.php` – listing dan detail paket tur dengan itinerary, highlight, dan paket terkait.
+* `resources/views/blog/*.blade.php` – daftar artikel dan halaman detail blog.
+* `resources/views/gallery/*.blade.php` – galeri foto perjalanan.
+* `resources/views/testimonials/index.blade.php` – kumpulan testimoni traveler.
+* `resources/views/contact.blade.php` – informasi kontak dan request proposal.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/5f3980c6-b6b3-4199-992d-314197c7f024) and start prompting.
+Semua data tersebut diambil dari model Eloquent (`TourPackage`, `DestinationCategory`, `Article`, `GalleryItem`, `Testimonial`) yang bisa diedit dari panel admin Filament.
 
-Changes made via Lovable will be committed automatically to this repo.
+## Panel admin Filament
 
-**Use your preferred IDE**
+Setelah menjalankan migrasi dan seeder, akses dashboard admin di `http://localhost:8000/admin` dan masuk menggunakan kredensial bawaan berikut:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+Email   : admin@jayatour.id
+Password: password
 ```
 
-**Edit a file directly in GitHub**
+Panel memberikan resource untuk:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+* Paket tour dan kategorinya.
+* Artikel blog.
+* Testimoni traveler.
+* Item galeri foto.
 
-**Use GitHub Codespaces**
+Gunakan Filament untuk menambah, mengubah, atau menghapus data sehingga perubahan langsung tercermin pada sisi publik.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Testing
 
-## What technologies are used for this project?
+Once dependencies are installed you can execute the automated test suite with:
 
-This project is built with:
+```bash
+php artisan test
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Pengembangan lanjutan
 
-## How can I deploy this project?
+* Atur integrasi storage (S3, local) apabila ingin mengunggah gambar secara langsung melalui Filament.
+* Tambahkan autentikasi kustom atau role tambahan dengan memanfaatkan properti `is_admin` pada model `User`.
+* Sesuaikan styling Blade atau ganti dengan Inertia/Livewire sesuai kebutuhan.
 
-Simply open [Lovable](https://lovable.dev/projects/5f3980c6-b6b3-4199-992d-314197c7f024) and click on Share -> Publish.
+## Deployment
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Follow your preferred Laravel deployment strategy (Forge, Vapor, Docker, etc.). Remember to set the necessary environment variables and run migrations on the target environment.
